@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  www:
+    image: voigt-wp-www
+    container_name: voigt-wp-www
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    env_file:
+      - docker/.docker.env
+    volumes:
+      - ./htdocs:/var/www/html
+    ports:
+      - 7080:80
+    depends_on:
+      - 'voigt-wp-mysql'
+  voigt-wp-mysql:
+    container_name: voigt-wp-mysql
+    image: mysql:5.7
+    volumes:
+      - voigt-wp-mysql:/var/lib/mysql
+      # - ./voigt-local-20200620.sql:/docker-entrypoint-initdb.d/dump.sql
+    environment:
+      MYSQL_DATABASE: bitstroom_mcu
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: bitstroom_mcu
+      MYSQL_PASSWORD: 0m4ifOxxa
+    ports:
+      - 13307:3306
+  voigt-wp-phpmyadmin:
+    # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+    container_name: 'voigt-wp-phpmyadmin'
+    image: 'phpmyadmin/phpmyadmin:latest'
+    ports:
+      - '7081:80'
+    environment:
+      - 'PMA_HOST=voigt-wp-mysql'
+    depends_on:
+      - 'voigt-wp-mysql'
+  voigt-wp-maildev:
+    image: djfarrelly/maildev
+    container_name: 'voigt-wp-maildev'
+    ports:
+      - "7083:80"
+volumes:
+  voigt-wp-mysql:
+    driver: "local"
