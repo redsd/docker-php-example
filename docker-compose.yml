@@ -2,8 +2,8 @@ version: "3"
 
 services:
   www:
-    image: voigt-wp-www
-    container_name: voigt-wp-www
+    image: '${APP_NAME}-www'
+    container_name: '${APP_NAME}-www'
     build:
       context: .
       dockerfile: docker/Dockerfile
@@ -12,37 +12,37 @@ services:
     volumes:
       - ./htdocs:/var/www/html
     ports:
-      - 7080:80
+      - ${PORT_PREFIX}80:80
     depends_on:
-      - 'voigt-wp-mysql'
-  voigt-wp-mysql:
-    container_name: voigt-wp-mysql
+      - 'mysql-db'
+  mysql-db:
+    container_name: '${APP_NAME}-mysql'
     image: mysql:8.0
     volumes:
-      - voigt-wp-mysql:/var/lib/mysql
-      # - ./voigt-local-20200620.sql:/docker-entrypoint-initdb.d/dump.sql
+      - mysql-db:/var/lib/mysql
+      - ./${MYSQL_IMPORT}:/docker-entrypoint-initdb.d/dump.sql
     environment:
-      MYSQL_DATABASE: bitstroom_mcu
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: bitstroom_mcu
-      MYSQL_PASSWORD: 0m4ifOxxa
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - 13307:3306
-  voigt-wp-phpmyadmin:
+      - ${PORT_PREFIX}83:3306
+  phpmyadmin:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
-    container_name: 'voigt-wp-phpmyadmin'
+    container_name: '${APP_NAME}-phpmyadmin'
     image: 'phpmyadmin/phpmyadmin:latest'
     ports:
-      - '7081:80'
+      - '${PORT_PREFIX}81:80'
     environment:
-      - 'PMA_HOST=voigt-wp-mysql'
+      - 'PMA_HOST=mysql-db'
     depends_on:
-      - 'voigt-wp-mysql'
-  voigt-wp-maildev:
+      - 'mysql-db'
+  maildev:
     image: djfarrelly/maildev
-    container_name: 'voigt-wp-maildev'
+    container_name: '${APP_NAME}-maildev'
     ports:
-      - "7083:80"
+      - "${PORT_PREFIX}82:80"
 volumes:
-  voigt-wp-mysql:
+  mysql-db:
     driver: "local"
