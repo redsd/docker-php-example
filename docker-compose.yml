@@ -17,7 +17,7 @@ services:
       - 'voigt-wp-mysql'
   voigt-wp-mysql:
     container_name: voigt-wp-mysql
-    image: mysql:5.7
+    image: mysql:8.0
     volumes:
       - voigt-wp-mysql:/var/lib/mysql
       # - ./voigt-local-20200620.sql:/docker-entrypoint-initdb.d/dump.sql
