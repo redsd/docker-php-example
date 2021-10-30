@@ -2,8 +2,8 @@ version: "3"
 
 services:
   www:
-    image: '${APP_NAME}-www'
-    container_name: '${APP_NAME}-www'
+    image: '${APP_NAME:-example}-www'
+    container_name: '${APP_NAME:-example}-www'
     build:
       context: .
       dockerfile: docker/Dockerfile
@@ -12,11 +12,11 @@ services:
     volumes:
       - ./htdocs:/var/www/html
     ports:
-      - ${PORT_PREFIX}80:80
+      - ${PORT_PREFIX:-808}0:80
     depends_on:
       - 'mysql-db'
   mysql-db:
-    container_name: '${APP_NAME}-mysql'
+    container_name: '${APP_NAME:-example}-mysql'
     image: mysql:8.0
     volumes:
       - mysql-db:/var/lib/mysql
@@ -27,22 +27,22 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - ${PORT_PREFIX}83:3306
+      - ${PORT_PREFIX:-808}3:3306
   phpmyadmin:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
-    container_name: '${APP_NAME}-phpmyadmin'
+    container_name: '${APP_NAME:-example}-phpmyadmin'
     image: 'phpmyadmin/phpmyadmin:latest'
     ports:
-      - '${PORT_PREFIX}81:80'
+      - '${PORT_PREFIX:-808}1:80'
     environment:
       - 'PMA_HOST=mysql-db'
     depends_on:
       - 'mysql-db'
   maildev:
     image: djfarrelly/maildev
-    container_name: '${APP_NAME}-maildev'
+    container_name: '${APP_NAME:-example}-maildev'
     ports:
-      - "${PORT_PREFIX}82:80"
+      - "${PORT_PREFIX:-808}2:80"
 volumes:
   mysql-db:
     driver: "local"
