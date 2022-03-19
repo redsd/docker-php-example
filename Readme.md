@@ -6,7 +6,7 @@ clone or download this repo.
 If you haven't installed docker yet, you can download it here: https://www.docker.com/products/docker-desktop
 
 ### Quickstart
-To get started right away, run the following command in the root folder.
+To get started right away, copy .env.example and change `APP_NAME` for example `APP_NAME=laravel-commerce`. Next run the following command in the root folder.
 
     Docker-compose up -d --build
 
