@@ -1,4 +1,4 @@
-## PHP 7.4 + Mysql 8.0 + PhpMyAdmin + MailDev
+## PHP 8.0 + Mysql 8.0 + PhpMyAdmin + MailDev
 
 ### Getting started
 clone or download this repo.
@@ -51,7 +51,7 @@ To logout out from the docker press `ctrl+d` (Windows/Linux) or `cmd+d` (MacOS).
 
 
 ## Supported application
-Known support applications 
+Known support applications
 - Wordpress
 - Laravel
 - Drupal
