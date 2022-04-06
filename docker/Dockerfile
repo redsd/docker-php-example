@@ -15,6 +15,10 @@ RUN apt-get update && apt-get install -y libmcrypt-dev \
     && a2enmod rewrite \
     && a2enmod headers
 
+# Add jpg support to GD library
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
+RUN docker-php-ext-install -j$(nproc) gd zip
+
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN apt-get clean && rm -r /var/lib/apt/lists/*
