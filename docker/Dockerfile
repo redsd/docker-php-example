@@ -6,6 +6,7 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0 \
 
 RUN apt-get update && apt-get install -y libmcrypt-dev \
     libzip-dev zip \
+    libwebp-dev \
     mariadb-client libmagickwand-dev imagemagick --no-install-recommends \
     && pecl install imagick \
     # && xdebug \
@@ -15,8 +16,8 @@ RUN apt-get update && apt-get install -y libmcrypt-dev \
     && a2enmod rewrite \
     && a2enmod headers
 
-# Add jpg support to GD library
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
+# Add jpg and webp support to GD library
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
 RUN docker-php-ext-install -j$(nproc) gd zip
 
 # Install Composer
