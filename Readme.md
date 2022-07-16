@@ -1,4 +1,4 @@
-## PHP 8.0 + Mysql 8.0 + PhpMyAdmin + MailDev
+## PHP 8.0 + Mysql 8.0 + PhpMyAdmin + Mailhog
 
 ### Getting started
 clone or download this repo.
@@ -28,7 +28,7 @@ Default username: `root`
 Default password: `root`
 
 **Mail server**
-When setting up the config for your CMS (like Wordpress, Joomla or Drupal) or framework (like Laravel), use `maildev` as hostname instead of *localhost* and port 25.
+When setting up the config for your CMS (like Wordpress, Joomla or Drupal) or framework (like Laravel), use `mailhog` as hostname instead of *localhost* and port 1025.
 
 Maildev can be reached at: http://localhost:8082/
 

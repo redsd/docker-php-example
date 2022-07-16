@@ -38,11 +38,12 @@ services:
       - 'PMA_HOST=mysql-db'
     depends_on:
       - 'mysql-db'
-  maildev:
-    image: djfarrelly/maildev
-    container_name: '${APP_NAME:-example}-maildev'
+  mailhog:
+    image: mailhog/mailhog
+    container_name: '${APP_NAME:-example}-mailhog'
     ports:
-      - "${PORT_PREFIX:-808}2:80"
+      - 1025:1025 # smtp server
+      - "${PORT_PREFIX:-808}2:8025" # web ui
 volumes:
   mysql-db:
     driver: "local"
